@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holt AI - Themes & Fonts</title>
+    <style>
+        /* Dynamic Theme Variables (Default: Electric Purple) */
+        :root {
+            --accent-primary: #7c3aed;
+            --accent-secondary: #9333ea;
+            --accent-glow: rgba(147, 51, 234, 0.2);
+            --accent-text: #c084fc;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #0b0f19;
+            color: #f1f5f9;
+            display: flex;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+        }
+
+        /* Sidebar Styling */
+        aside {
+            width: 260px;
+            background-color: #131827;
+            border-right: 1px solid #1f293d;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+            z-index: 10;
+        }
+
+        .sidebar-header {
+            padding: 1rem;
+            border-bottom: 1px solid #1f293d;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .new-chat-btn {
+            background: transparent;
+            border: 1px solid #2e3d59;
+            color: var(--accent-text);
+            padding: 0.6rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background 0.2s;
+        }
+
+        .new-chat-btn:active {
+            background-color: #1f293d;
+        }
+
+        .sidebar-chats {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .chat-thread-item {
+            padding: 0.6rem 0.8rem;
+            border-radius: 0.5rem;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .chat-thread-item:hover, .chat-thread-item.active {
+            background-color: #1f293d;
+            color: #f1f5f9;
+        }
+
+        /* Sidebar Footer Customization Panel */
+        .sidebar-footer {
+            padding: 0.8rem 1rem;
+            border-top: 1px solid #1f293d;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+
+        .footer-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .theme-swatches {
+            display: flex;
+            gap: 0.4rem;
+            align-items: center;
+        }
+
+        .swatch {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .swatch:hover {
+            transform: scale(1.1);
+        }
+
+        .swatch.selected {
+            border-color: #f1f5f9;
+            transform: scale(1.15);
+        }
+
+        .font-select {
+            background-color: #0b0f19;
+            color: #f1f5f9;
+            border: 1px solid #2e3d59;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.4rem;
+            font-size: 0.75rem;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .font-select:focus {
+            border-color: var(--accent-text);
+        }
+
+        /* Main Chat Area */
+        .main-chat {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background-color: #0b0f19;
+        }
+
+        header {
+            background-color: #131827;
+            padding: 0.8rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 1px solid #1f293d;
+        }
+
+        .menu-toggle {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        header h1 {
+            font-size: 1.2rem;
+            color: var(--accent-text);
+            font-weight: 700;
+        }
+
+        .chat-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 0.8rem 1rem;
+            border-radius: 1rem;
+            line-height: 1.5;
+            font-size: 0.95rem;
+            word-break: break-word;
+        }
+
+        .user-message {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 0.2rem;
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+
+        .ai-message {
+            background-color: #171f33;
+            color: #e2e8f0;
+            align-self: flex-start;
+            border-bottom-left-radius: 0.2rem;
+            border: 1px solid #26334d;
+        }
+
+        .error-message {
+            background-color: #451a03;
+            border-color: #78350f;
+            color: #fde68a;
+        }
+
+        .typing-indicator {
+            font-style: italic;
+            color: #94a3b8;
+            font-size: 0.85rem;
+            display: none;
+            padding: 0.5rem 1rem;
+            align-self: flex-start;
+        }
+
+        .input-container {
+            padding: 0.75rem 1rem;
+            background-color: #131827;
+            display: flex;
+            gap: 0.55rem;
+            border-top: 1px solid #1f293d;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border-radius: 9999px;
+            border: 1px solid #2e3d59;
+            background-color: #0b0f19;
+            color: white;
+            outline: none;
+            font-size: 0.95rem;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--accent-text);
+        }
+
+        .send-btn {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            border: none;
+            padding: 0 1.25rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Mobile Responsive Sidebar Toggle */
+        @media (max-width: 768px) {
+            aside {
+                position: absolute;
+                height: 100%;
+                transform: translateX(-100%);
+            }
+            aside.open {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <aside id="sidebar">
+        <div class="sidebar-header">
+            <button class="new-chat-btn" id="newChatBtn">＋ New Chat</button>
+        </div>
+        <div class="sidebar-chats" id="sidebarChats">
+            <!-- Saved chat sessions list -->
+        </div>
+        <div class="sidebar-footer">
+            <div class="footer-row">
+                <span>Theme</span>
+                <div class="theme-swatches" id="themeSwatches">
+                    <div class="swatch" style="background-color: #7c3aed;" data-color="#7c3aed" title="Purple"></div>
+                    <div class="swatch" style="background-color: #0284c7;" data-color="#0284c7" title="Neon Blue"></div>
+                    <div class="swatch" style="background-color: #059669;" data-color="#059669" title="Emerald Green"></div>
+                    <div class="swatch" style="background-color: #ea580c;" data-color="#ea580c" title="Sunset Orange"></div>
+                    <div class="swatch" style="background-color: #db2777;" data-color="#db2777" title="Hot Pink"></div>
+                </div>
+            </div>
+            <div class="footer-row">
+                <span>Font</span>
+                <select id="fontSelector" class="font-select">
+                    <option value="system-ui, sans-serif">Modern</option>
+                    <option value="'Courier New', monospace">Mono / Code</option>
+                    <option value="Georgia, serif">Serif</option>
+                    <option value="'Comic Sans MS', cursive, sans-serif">Playful</option>
+                </select>
+            </div>
+        </div>
+    </aside>
+
+    <div class="main-chat">
+        <header>
+            <button class="menu-toggle" id="menuToggle">☰</button>
+            <h1>Holt AI</h1>
+        </header>
+
+        <div class="chat-container" id="chatContainer">
+            <!-- Messages load here -->
+        </div>
+
+        <div class="typing-indicator" id="typingIndicator">Holt AI is thinking...</div>
+
+        <div class="input-container">
+            <input type="text" id="userInput" placeholder="Ask Holt AI a question..." autocomplete="off">
+            <button class="send-btn" id="sendBtn">Send</button>
+        </div>
+    </div>
+
+    <script>
+        // PASTE YOUR GEMINI API KEY INSIDE THE QUOTES BELOW:
+        const API_KEY = 'YOUR_API_KEY_HERE';
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const chatContainer = document.getElementById('chatContainer');
+            const userInput = document.getElementById('userInput');
+            const sendBtn = document.getElementById('sendBtn');
+            const newChatBtn = document.getElementById('newChatBtn');
+            const sidebarChats = document.getElementById('sidebarChats');
+            const typingIndicator = document.getElementById('typingIndicator');
+            const menuToggle = document.getElementById('menuToggle');
+            const sidebar = document.getElementById('sidebar');
+            const swatches = document.querySelectorAll('.swatch');
+            const fontSelector = document.getElementById('fontSelector');
+
+            // --- Theme Color Manager ---
+            function applyTheme(hexColor) {
+                document.documentElement.style.setProperty('--accent-primary', hexColor);
+                document.documentElement.style.setProperty('--accent-secondary', hexColor);
+                document.documentElement.style.setProperty('--accent-text', hexColor);
+                document.documentElement.style.setProperty('--accent-glow', hexColor + '33');
+
+                swatches.forEach(swatch => {
+                    if (swatch.getAttribute('data-color') === hexColor) {
+                        swatch.classList.add('selected');
+                    } else {
+                        swatch.classList.remove('selected');
+                    }
+                });
+            }
+
+            const savedTheme = localStorage.getItem('holt_accent_color') || '#7c3aed';
+            applyTheme(savedTheme);
+
+            swatches.forEach(swatch => {
+                swatch.addEventListener('click', () => {
+                    const color = swatch.getAttribute('data-color');
+                    applyTheme(color);
+                    localStorage.setItem('holt_accent_color', color);
+                });
+            });
+
+            // --- Font Customizer ---
+            function applyFont(fontFamily) {
+                document.body.style.fontFamily = fontFamily;
+                fontSelector.value = fontFamily;
+            }
+
+            const savedFont = localStorage.getItem('holt_font') || 'system-ui, sans-serif';
+            applyFont(savedFont);
+
+            fontSelector.addEventListener('change', (e) => {
+                const selectedFont = e.target.value;
+                applyFont(selectedFont);
+                localStorage.setItem('holt_font', selectedFont);
+            });
+
+            // Sidebar Toggle
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('open');
+            });
+
+            let sessions = JSON.parse(localStorage.getItem('holt_sessions')) || [
+                { id: '1', title: 'New Conversation', messages: [{ text: "Hello! I'm Holt AI, your personal assistant. Ask me anything!", sender: 'ai', isError: false }] }
+            ];
+            let currentSessionId = sessions[0].id;
+
+            function saveSessions() {
+                localStorage.setItem('holt_sessions', JSON.stringify(sessions));
+            }
+
+            function getCurrentSession() {
+                return sessions.find(s => s.id === currentSessionId) || sessions[0];
+            }
+
+            function renderSidebar() {
+                sidebarChats.innerHTML = '';
+                sessions.forEach(session => {
+                    const item = document.createElement('div');
+                    item.classList.add('chat-thread-item');
+                    if (session.id === currentSessionId) item.classList.add('active');
+                    item.textContent = session.title;
+                    item.addEventListener('click', () => {
+                        currentSessionId = session.id;
+                        renderSidebar();
+                        renderChat();
+                        if (window.innerWidth <= 768) sidebar.classList.remove('open');
+                    });
+                    sidebarChats.appendChild(item);
+                });
+            }
+
+            function renderChat() {
+                chatContainer.innerHTML = '';
+                const session = getCurrentSession();
+                session.messages.forEach(msg => {
+                    const messageDiv = document.createElement('div');
+                    messageDiv.classList.add('message');
+                    if (msg.isError) {
+                        messageDiv.classList.add('ai-message', 'error-message');
+                    } else {
+                        messageDiv.classList.add(msg.sender === 'user' ? 'user-message' : 'ai-message');
+                    }
+                    messageDiv.textContent = msg.text;
+                    chatContainer.appendChild(messageDiv);
+                });
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+
+            function appendToCurrentSession(text, sender, isError = false) {
+                const session = getCurrentSession();
+                session.messages.push({ text, sender, isError });
+                
+                if (sender === 'user' && session.title === 'New Conversation') {
+                    session.title = text.length > 25 ? text.substring(0, 25) + '...' : text;
+                }
+
+                saveSessions();
+                renderSidebar();
+                renderChat();
+            }
+
+            async function callGeminiAPI(promptText) {
+                if (API_KEY === 'YOUR_API_KEY_HERE') {
+                    appendToCurrentSession("Please add your Gemini API key inside the JavaScript code block to start chatting with the live AI.", 'ai', true);
+                    return;
+                }
+
+                typingIndicator.style.display = 'block';
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${API_KEY}`;
+
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            system_instruction: {
+                                parts: [{ text: "You are Holt AI, a helpful, friendly, and versatile personal assistant. You can help with any topic, question, or task. Never say you are Gemini or made by Google." }]
+                            },
+                            contents: [{
+                                parts: [{ text: promptText }]
+                            }]
+                        })
+                    });
+
+                    const data = await response.json();
+                    typingIndicator.style.display = 'none';
+
+                    if (data.candidates && data.candidates[0].content.parts[0].text) {
+                        const aiReply = data.candidates[0].content.parts[0].text;
+                        appendToCurrentSession(aiReply, 'ai', false);
+                    } else if (data.error) {
+                        appendToCurrentSession("API Error: " + data.error.message, 'ai', true);
+                    } else {
+                        appendToCurrentSession("Received an unexpected response format from the API.", 'ai', true);
+                    }
+                } catch (error) {
+                    typingIndicator.style.display = 'none';
+                    appendToCurrentSession("Network error: Could not reach the API. Check your internet connection.", 'ai', true);
+                    console.error(error);
+                }
+            }
+
+            function handleUserSubmit() {
+                const text = userInput.value.trim();
+                if (!text) return;
+
+                appendToCurrentSession(text, 'user', false);
+                userInput.value = '';
+
+                callGeminiAPI(text);
+            }
+
+            newChatBtn.addEventListener('click', () => {
+                const newId = Date.now().toString();
+                sessions.unshift({
+                    id: newId,
+                    title: 'New Conversation',
+                    messages: [{ text: "New chat started! What's on your mind?", sender: 'ai', isError: false }]
+                });
+                currentSessionId = newId;
+                saveSessions();
+                renderSidebar();
+                renderChat();
+                if (window.innerWidth <= 768) sidebar.classList.remove('open');
+            });
+
+            sendBtn.addEventListener('click', handleUserSubmit);
+            userInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleUserSubmit();
+                }
+            });
+
+            renderSidebar();
+            renderChat();
+        });
+    </script>
+</body>
+</html>
